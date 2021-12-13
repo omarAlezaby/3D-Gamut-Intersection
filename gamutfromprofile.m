@@ -1,6 +1,9 @@
 function [vertices, faces]=gamutfromprofile(profile)
 % GAMUTFROMPROFILE: calculates the volume of usable gamut and device gamut 
 % from an ICC CMYK or RGB profile according to ISO 18621-11 4.4.2
+% 
+% Note: The fucntion was modified to return the gamut description of the
+% computed gamut surface
 %
 % Example: V=gamutfromprofile('profilename.icc')
 % where 'profilename.icc' is the filename of the ICC profile whose gamut 
@@ -29,11 +32,11 @@ warning('on')
 P2=iccread(profile);
 if isicc(P2)
 		if strcmp(P2.Header.ColorSpace,'RGB')
-			faces=double(load("data_scripts\RGBSurfaceTriangles.mat").data);
-			device_data=imread('ISO 18621-11 Fig A1_RGB.tif');
+			faces=double(load("data\RGBSurfaceTriangles.mat").data);
+			device_data=imread('data\ISO 18621-11 Fig A1_RGB.tif');
 		elseif strcmp(P2.Header.ColorSpace,'CMYK')
-			faces=double(load("data_scripts\CMYKSurfaceTriangles.mat").data);
-			device_data=imread('ISO 18621-11 Fig A1_CMYK.tif');
+			faces=double(load("data\CMYKSurfaceTriangles.mat").data);
+			device_data=imread('data\ISO 18621-11 Fig A1_CMYK.tif');
 		else
 			disp('Data colour space of profile must be RGB or CMYK');
 		end
